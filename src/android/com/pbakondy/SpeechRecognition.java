@@ -1,11 +1,15 @@
 package com.pbakondy;
 
-import org.apache.cordova.*;
+import org.apache.cordova.CallbackContext;
+import org.apache.cordova.CordovaInterface;
+import org.apache.cordova.CordovaPlugin;
+import org.apache.cordova.CordovaWebView;
 import org.json.JSONArray;
 import org.json.JSONException;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;                  // ← 追加
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,11 +24,11 @@ import java.util.Locale;
 
 public class SpeechRecognition extends CordovaPlugin implements RecognitionListener {
 
-    private static final String LOG_TAG = "SpeechRecognition";
-    private static final String START_LISTENING = "startListening";
-    private static final String STOP_LISTENING  = "stopListening";
-    private static final String HAS_PERMISSION  = "hasPermission";
-    private static final String REQUEST_PERMISSION = "requestPermission";
+    private static final String LOG_TAG               = "SpeechRecognition";
+    private static final String START_LISTENING       = "startListening";
+    private static final String STOP_LISTENING        = "stopListening";
+    private static final String HAS_PERMISSION        = "hasPermission";
+    private static final String REQUEST_PERMISSION    = "requestPermission";
     private static final String RECORD_AUDIO_PERMISSION = Manifest.permission.RECORD_AUDIO;
 
     private CallbackContext callbackContext;
@@ -45,11 +49,11 @@ public class SpeechRecognition extends CordovaPlugin implements RecognitionListe
         if (START_LISTENING.equals(action)) {
             // パーミッションチェック
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
-                && cordova.hasPermission(RECORD_AUDIO_PERMISSION) == false) {
+                && !cordova.hasPermission(RECORD_AUDIO_PERMISSION)) {
                 ctx.error("Missing permission");
             } else {
-                String lang = args.optString(0, Locale.getDefault().toString());
-                int maxResults = args.optInt(1, 5);
+                String lang       = args.optString(0, Locale.getDefault().toString());
+                int maxResults    = args.optInt(1, 5);
                 startListening(lang, maxResults);
                 ctx.success();
             }
@@ -122,10 +126,9 @@ public class SpeechRecognition extends CordovaPlugin implements RecognitionListe
     @Override
     public void onEvent(int eventType, Bundle params) { }
 
-    // onActivityResult は不要なのでオーバーライドしても super のみ
+    // CordovaPlugin の onActivityResult は Intent を扱わないので super のみ
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // 何もしない
         super.onActivityResult(requestCode, resultCode, data);
     }
 
