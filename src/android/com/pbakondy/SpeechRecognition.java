@@ -33,7 +33,7 @@ public class SpeechRecognition extends CordovaPlugin implements RecognitionListe
     @Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         super.initialize(cordova, webView);
-        // SpeechRecognizer ‚ğæ‚Éì¬
+        // SpeechRecognizer ã‚’å…ˆã«ä½œæˆ
         recognizer = SpeechRecognizer.createSpeechRecognizer(cordova.getActivity());
         recognizer.setRecognitionListener(this);
     }
@@ -43,7 +43,7 @@ public class SpeechRecognition extends CordovaPlugin implements RecognitionListe
         this.callbackContext = ctx;
 
         if (START_LISTENING.equals(action)) {
-            // ƒp[ƒ~ƒbƒVƒ‡ƒ“ƒ`ƒFƒbƒN
+            // ãƒ‘ãƒ¼ãƒŸãƒƒã‚·ãƒ§ãƒ³ãƒã‚§ãƒƒã‚¯
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
                 && cordova.hasPermission(RECORD_AUDIO_PERMISSION) == false) {
                 ctx.error("Missing permission");
@@ -87,7 +87,7 @@ public class SpeechRecognition extends CordovaPlugin implements RecognitionListe
         recognizer.startListening(intent);
     }
 
-    // RecognitionListener ‚ÌÀ‘• «
+    // RecognitionListener ã®å®Ÿè£… â†“
 
     @Override
     public void onReadyForSpeech(Bundle params) { }
@@ -122,10 +122,10 @@ public class SpeechRecognition extends CordovaPlugin implements RecognitionListe
     @Override
     public void onEvent(int eventType, Bundle params) { }
 
-    // onActivityResult ‚Í•s—v‚È‚Ì‚ÅƒI[ƒo[ƒ‰ƒCƒh‚µ‚Ä‚à super ‚Ì‚İ
+    // onActivityResult ã¯ä¸è¦ãªã®ã§ã‚ªãƒ¼ãƒãƒ¼ãƒ©ã‚¤ãƒ‰ã—ã¦ã‚‚ super ã®ã¿
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // ‰½‚à‚µ‚È‚¢
+        // ä½•ã‚‚ã—ãªã„
         super.onActivityResult(requestCode, resultCode, data);
     }
 
@@ -139,7 +139,7 @@ public class SpeechRecognition extends CordovaPlugin implements RecognitionListe
         }
     }
 
-    // ƒGƒ‰[ƒR[ƒh¨ƒƒbƒZ[ƒW
+    // ã‚¨ãƒ©ãƒ¼ã‚³ãƒ¼ãƒ‰â†’ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸
     private String getErrorText(int code) {
         switch (code) {
             case SpeechRecognizer.ERROR_AUDIO: return "Audio recording error";
