@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  id="cordova-plugin-speechrecognition"
-  version="1.2.0">
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        id="cordova-plugin-speechrecognition"
+        version="1.2.0">
 
   <name>Speech Recognition</name>
   <description>Cordova Plugin for Speech Recognition</description>
@@ -22,18 +22,24 @@
 
   <!-- android -->
   <platform name="android">
+    <!-- Java クラスのパッケージ登録 -->
     <config-file target="res/xml/config.xml" parent="/*">
       <feature name="SpeechRecognition">
         <param name="android-package" value="com.pbakondy.SpeechRecognition"/>
       </feature>
     </config-file>
 
+    <!-- マイク権限 -->
     <config-file target="AndroidManifest.xml" parent="/*">
       <uses-permission android:name="android.permission.RECORD_AUDIO" />
     </config-file>
 
-    <source-file src="src/android/com/pbakondy/SpeechRecognition.java" target-dir="src/com/pbakondy" />
-    <source-file src="src/android/com/pbakondy/LanguageDetailsChecker.java" target-dir="src/com/pbakondy" />
+    <!-- ネイティブコード配置 -->
+    <source-file src="src/android/com/pbakondy/SpeechRecognition.java"
+                 target-dir="src/com/pbakondy" />
+    <!-- LanguageDetailsChecker は不要なら削除、必要なら以下を残す -->
+    <source-file src="src/android/com/pbakondy/LanguageDetailsChecker.java"
+                 target-dir="src/com/pbakondy" />
   </platform>
 
   <!-- ios -->
@@ -47,14 +53,12 @@
     <config-file target="*-Info.plist" parent="NSMicrophoneUsageDescription">
       <string>Request to use Microphone</string>
     </config-file>
-
     <config-file target="*-Info.plist" parent="NSSpeechRecognitionUsageDescription">
       <string>Request to use Speech Recognition</string>
     </config-file>
 
     <header-file src="src/ios/SpeechRecognition.h"/>
     <source-file src="src/ios/SpeechRecognition.m"/>
-
     <framework src="Speech.framework" />
   </platform>
 
